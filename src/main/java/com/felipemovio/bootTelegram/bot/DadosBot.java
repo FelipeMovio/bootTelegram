@@ -1,4 +1,4 @@
-package com.felipemovio.bootTelegram.model;
+package com.felipemovio.bootTelegram.bot;
 
 public class DadosBot {
 
