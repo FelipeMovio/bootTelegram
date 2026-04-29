@@ -1,9 +1,4 @@
-package com.felipemovio.bootTelegram.config;
-
-import com.felipemovio.bootTelegram.bot.TelegramBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+package com.felipemovio.bootTelegram;
 
 //public class RegistraBot {
 //
