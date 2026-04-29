@@ -1,4 +1,4 @@
-package com.felipemovio.bootTelegram.bot;
+package com.felipemovio.bootTelegram.config;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,12 +13,14 @@ public class EchoBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return DadosBot.BOT_USER_NAME;
+        DadosBot dadosBot = new DadosBot();
+        return  dadosBot.getUserName();
     }
 
     @Override
     public String getBotToken() {
-        return DadosBot.BOT_TOKEN;
+        DadosBot dadosBot = new DadosBot();
+        return  dadosBot.getToken();
     }
 
     @Override

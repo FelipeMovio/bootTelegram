@@ -1,4 +1,4 @@
-package com.felipemovio.bootTelegram.bot;
+package com.felipemovio.bootTelegram.config;
 
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
