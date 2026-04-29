@@ -16,5 +16,5 @@ public class DadosBot {
     private String token;
 
     @Value("${telegram.bot.username}")
-    private String userName;
+    private String username;
 }
