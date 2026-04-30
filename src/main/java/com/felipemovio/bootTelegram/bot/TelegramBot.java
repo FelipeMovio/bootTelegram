@@ -55,7 +55,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             SendMessage mensagem = SendMessage.builder()
                     .chatId(chatId)
                     .text(resposta)
-                    .replyMarkup(criarMenu())
+                    .replyMarkup(botService.criarMenu())
                     .build();
 
             try {
@@ -66,24 +66,4 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private ReplyKeyboardMarkup criarMenu() {
-
-        KeyboardRow row1 = new KeyboardRow();
-        row1.add("📅 Data");
-        row1.add("⏰ Hora");
-
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add("🙋 Sobre");
-        row2.add("❓ Help");
-
-        List<KeyboardRow> teclado = new ArrayList<>();
-        teclado.add(row1);
-        teclado.add(row2);
-
-        ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
-        markup.setKeyboard(teclado);
-        markup.setResizeKeyboard(true);
-
-        return markup;
-    }
 }
