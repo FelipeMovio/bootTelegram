@@ -15,8 +15,7 @@ import lombok.Setter;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chatId;
+    private String chatId;
 
     private String nome;
 

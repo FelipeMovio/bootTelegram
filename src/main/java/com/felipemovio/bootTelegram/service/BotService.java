@@ -12,40 +12,31 @@ public class BotService {
 
         texto = texto.toLowerCase();
 
-        if (texto.equals("data")) {
-            return getData();
+        if (texto.equals("📅 data")) {
+            return "📅 Data atual: " + LocalDate.now();
         }
 
-        if (texto.startsWith("hora")) {
-            return getHora();
+        if (texto.equals("⏰ hora")) {
+            return "⏰ Hora atual: " + LocalTime.now();
         }
 
-        if (texto.startsWith("ola") || texto.startsWith("olá") || texto.startsWith("oi")) {
-            return "🤖 Olá! Como posso te ajudar?";
+        if (texto.equals("🙋 sobre")) {
+            return "🤖 Eu sou um bot com banco de dados!";
         }
 
-        if (texto.contains("quem é você") || texto.contains("quem e voce")) {
-            return "🤖 Eu sou um bot criado em Java com Spring Boot!";
-        }
-
-        if (texto.equals("/help")) {
+        if (texto.equals("❓ help") || texto.equals("/help")) {
             return """
                     Comandos disponíveis:
-                    - olá
-                    - data
-                    - hora
-                    - quem é você
+                    📅 Data
+                    ⏰ Hora
+                    🙋 Sobre
                     """;
         }
 
-        return "Não entendi! Digite /help.";
-    }
+        if (texto.startsWith("ola") || texto.startsWith("olá") || texto.startsWith("oi")) {
+            return "🤖 Olá! Use o menu abaixo 👇";
+        }
 
-    private String getData() {
-        return "A data atual é: " + LocalDate.now();
-    }
-
-    private String getHora() {
-        return "A hora atual é: " + LocalTime.now();
+        return "Use os botões abaixo 👇";
     }
 }

@@ -2,20 +2,28 @@ package com.felipemovio.bootTelegram.bot;
 
 import com.felipemovio.bootTelegram.config.DadosBot;
 import com.felipemovio.bootTelegram.service.BotService;
+import com.felipemovio.bootTelegram.service.UsuarioService;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.*;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
     private final DadosBot dadosBot;
     private final BotService botService;
+    private final UsuarioService usuarioService;
 
-    public TelegramBot(DadosBot dadosBot, BotService botService) {
+    public TelegramBot(DadosBot dadosBot, BotService botService, UsuarioService usuarioService) {
         this.dadosBot = dadosBot;
         this.botService = botService;
+        this.usuarioService = usuarioService;
     }
 
     @Override
@@ -33,21 +41,49 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
 
-            String texto = update.getMessage().getText();
-            String chatId = update.getMessage().getChatId().toString();
+            var msg = update.getMessage();
 
-            String resposta = botService.processarMensagem(texto);
+            String chatId = msg.getChatId().toString();
+            String nome = msg.getFrom().getFirstName();
+            String username = msg.getFrom().getUserName();
+
+            // salva usuário
+            usuarioService.salvarOuAtualizar(chatId, nome, username);
+
+            String resposta = botService.processarMensagem(msg.getText());
 
             SendMessage mensagem = SendMessage.builder()
                     .chatId(chatId)
                     .text(resposta)
+                    .replyMarkup(criarMenu())
                     .build();
 
             try {
                 execute(mensagem);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Erro ao enviar mensagem: " + e.getMessage());;
             }
         }
+    }
+
+    private ReplyKeyboardMarkup criarMenu() {
+
+        KeyboardRow row1 = new KeyboardRow();
+        row1.add("📅 Data");
+        row1.add("⏰ Hora");
+
+        KeyboardRow row2 = new KeyboardRow();
+        row2.add("🙋 Sobre");
+        row2.add("❓ Help");
+
+        List<KeyboardRow> teclado = new ArrayList<>();
+        teclado.add(row1);
+        teclado.add(row2);
+
+        ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
+        markup.setKeyboard(teclado);
+        markup.setResizeKeyboard(true);
+
+        return markup;
     }
 }

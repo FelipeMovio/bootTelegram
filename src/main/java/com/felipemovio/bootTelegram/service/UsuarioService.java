@@ -13,10 +13,15 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public void salvarSeNaoExistir(Long chatId, String nome, String username) {
-        if (!repository.existsById(chatId)) {
-            Usuario usuario = new Usuario(chatId, nome, username);
-            repository.save(usuario);
-        }
+    public void salvarOuAtualizar(String chatId, String nome, String comando) {
+
+        Usuario usuario = repository.findById(chatId)
+                .orElse(new Usuario());
+
+        usuario.setChatId(chatId);
+        usuario.setNome(nome);
+        usuario.setUltimoComando(comando);
+
+        repository.save(usuario);
     }
 }
