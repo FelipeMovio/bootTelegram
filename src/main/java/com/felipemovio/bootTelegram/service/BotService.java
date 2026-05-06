@@ -12,6 +12,12 @@ import java.util.List;
 @Service
 public class BotService {
 
+    private final ChatGPTService chatGPTService;
+
+    public BotService(ChatGPTService chatGPTService) {
+        this.chatGPTService = chatGPTService;
+    }
+
     public String processarMensagem(String texto) {
 
         if (texto == null) return "Erro na mensagem.";
@@ -52,8 +58,9 @@ public class BotService {
             return "🤖 Olá! Use o menu abaixo 👇";
         }
 
-        //  DEFAULT
-        return "❌ Não entendi. Use os botões abaixo 👇";
+
+        // DEFAULT (usa IA)
+        return chatGPTService.perguntar(original);
     }
 
     public ReplyKeyboardMarkup criarMenu() {
