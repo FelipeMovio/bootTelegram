@@ -7,11 +7,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.*;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -45,10 +40,13 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             String chatId = msg.getChatId().toString();
             String nome = msg.getFrom().getFirstName();
-            String username = msg.getFrom().getUserName();
+            String username = msg.getFrom().getUserName() != null
+                    ? msg.getFrom().getUserName()
+                    : "sem_username";
+            String UltimaMensagem = msg.getText();
 
             // salva usuário
-            usuarioService.salvarOuAtualizar(chatId, nome, username);
+            usuarioService.salvarOuAtualizar(chatId, nome, username, UltimaMensagem);
 
             String resposta = botService.processarMensagem(msg.getText());
 

@@ -13,13 +13,14 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public void salvarOuAtualizar(String chatId, String nome, String comando) {
+    public void salvarOuAtualizar(String chatId, String nome, String username, String comando) {
 
         Usuario usuario = repository.findById(chatId)
                 .orElse(new Usuario());
 
         usuario.setChatId(chatId);
         usuario.setNome(nome);
+        usuario.setUsername(username);
         usuario.setUltimoComando(comando);
 
         repository.save(usuario);
